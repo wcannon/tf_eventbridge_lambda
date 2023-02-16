@@ -59,7 +59,8 @@ resource "aws_cloudwatch_event_rule" "schedule" {
   name        = "test-www"
   description = "Schedule for Lambda Function"
   #schedule_expression = rate(1 minutes)
-  schedule_expression = "cron(0/10 * ? * MON-FRI *)"
+  #schedule_expression = "cron(0/10 * ? * MON-FRI *)"
+  schedule_expression = var.lambda_cron
 }
 
 resource "aws_cloudwatch_event_target" "schedule_lambda" {
@@ -74,4 +75,10 @@ resource "aws_lambda_permission" "allow_events_bridge_to_run_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.processing_lambda.function_name
   principal     = "events.amazonaws.com"
+}
+
+variable "lambda_cron" {
+  description = "cron expression"
+  #default     = "cron(0/10 * ? * MON-FRI *)"
+  default = "cron(0 */4 ? * 1-7 *)"
 }
