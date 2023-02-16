@@ -56,7 +56,7 @@ data "aws_iam_policy_document" "test_policy_document" {
 }
 
 resource "aws_cloudwatch_event_rule" "schedule" {
-  name        = "schedule"
+  name        = "test-www"
   description = "Schedule for Lambda Function"
   #schedule_expression = rate(1 minutes)
   schedule_expression = "cron(0/10 * ? * MON-FRI *)"
